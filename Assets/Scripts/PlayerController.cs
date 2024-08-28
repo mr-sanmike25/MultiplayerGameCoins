@@ -1,12 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public enum playerStates
-{
-    idle,
-    moving,
-};
+using Photon.Pun;
 
 public class PlayerController : MonoBehaviour
 {
@@ -21,10 +16,13 @@ public class PlayerController : MonoBehaviour
     Animator myAnim;
 
     public playerStates playerCurrentState;
+    PhotonView m_pv;
 
     // Start is called before the first frame update
     void Start()
     {
+        m_pv = GetComponent<PhotonView>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         m_rb2D = GetComponent<Rigidbody2D>();
         myAnim = GetComponent<Animator>();
     }
@@ -48,24 +46,27 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void PlayerMov()
     {
-        float m_movementX = Input.GetAxisRaw("Horizontal");
-        float m_movementY = Input.GetAxisRaw("Vertical");
-
-        m_movement = new Vector2(m_movementX, m_movementY).normalized;
-
-        m_rb2D.MovePosition(m_rb2D.position + m_movement * m_speed * Time.fixedDeltaTime);
-
-        if ((m_movementX != 0) || (m_movementY != 0))
+        if (m_pv.IsMine)
         {
-            playerCurrentState = playerStates.moving;
-            myAnim.SetFloat("horMovement", m_movementX);
-            myAnim.SetFloat("verMovement", m_movementY);
-            myAnim.SetBool("moveBool", true);
-        }
-        else
-        {
-            playerCurrentState = playerStates.idle;
-            myAnim.SetBool("moveBool", false);
+            float m_movementX = Input.GetAxisRaw("Horizontal");
+            float m_movementY = Input.GetAxisRaw("Vertical");
+
+            m_movement = new Vector2(m_movementX, m_movementY).normalized;
+
+            m_rb2D.MovePosition(m_rb2D.position + m_movement * m_speed * Time.fixedDeltaTime);
+
+            if ((m_movementX != 0) || (m_movementY != 0))
+            {
+                playerCurrentState = playerStates.moving;
+                myAnim.SetFloat("horMovement", m_movementX);
+                myAnim.SetFloat("verMovement", m_movementY);
+                myAnim.SetBool("moveBool", true);
+            }
+            else
+            {
+                playerCurrentState = playerStates.idle;
+                myAnim.SetBool("moveBool", false);
+            }
         }
     }
     #endregion
@@ -79,3 +80,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 }
+
+public enum playerStates
+{
+    idle,
+    moving,
+};
