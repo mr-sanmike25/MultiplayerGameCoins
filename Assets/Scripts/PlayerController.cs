@@ -75,7 +75,8 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.CompareTag("Coin"))
         {
-            gameManager.AddCoinsToCount();
+            //gameManager.AddCoinsToCount();
+            //m_pv.RPC("addPointsInUI", RpcTarget.AllBuffered, 5);
             Destroy(collision.gameObject);
         }
     }

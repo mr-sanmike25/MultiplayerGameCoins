@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.UI;
+using TMPro;
 
 public class PhotonConnection : MonoBehaviourPunCallbacks
 {
@@ -10,7 +12,7 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
     /// Author: Alan Elias Carpinteyro Gastelum.
     /// Brief: Código para conectar a cuartos y servidores de Photon.
 
-    // Start is called before the first frame update
+    [SerializeField] TMP_InputField m_newInputField;
     void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
@@ -25,13 +27,15 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         print("Se ha entrado al Lobby Abstracto");
-        PhotonNetwork.JoinOrCreateRoom("TestRoom", NewRoomInfo(), null);
+        
+        //PhotonNetwork.JoinOrCreateRoom("TestRoom", NewRoomInfo(), null);
     }
 
     public override void OnJoinedRoom()
     {
         print("Se entró al room");
-        PhotonNetwork.Instantiate("Player", new Vector3(0,0,0), Quaternion.identity);
+        //PhotonNetwork.Instantiate("Player", new Vector3(0,0,0), Quaternion.identity);
+        PhotonNetwork.LoadLevel("Game");
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -52,5 +56,15 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
         roomOptions.IsVisible = true;
 
         return roomOptions;
+    }
+
+    public void joinRoom()
+    {
+        PhotonNetwork.JoinRoom(m_newInputField.text);
+    }
+
+    public void createRoom()
+    {
+        PhotonNetwork.CreateRoom(m_newInputField.text, NewRoomInfo(), null);
     }
 }
