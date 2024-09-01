@@ -13,6 +13,8 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
     /// Brief: Código para conectar a cuartos y servidores de Photon.
 
     [SerializeField] TMP_InputField m_newInputField;
+    [SerializeField] TextMeshProUGUI m_joinRoomFailedTextMeshProUGUI;
+    [SerializeField] TextMeshProUGUI m_createRoomFailedTextMeshProUGUI;
     void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
@@ -35,17 +37,21 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
     {
         print("Se entró al room");
         //PhotonNetwork.Instantiate("Player", new Vector3(0,0,0), Quaternion.identity);
-        PhotonNetwork.LoadLevel("Game");
+        PhotonNetwork.LoadLevel("Gameplay");
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
         print("Hubo un error al crear el room: " + message);
+        m_createRoomFailedTextMeshProUGUI.gameObject.SetActive(true);
+        m_createRoomFailedTextMeshProUGUI.text = "Hubo un error al crear el room: " + m_newInputField.text;
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         print("Hubo un error al entrar el room: " + message);
+        m_joinRoomFailedTextMeshProUGUI.gameObject.SetActive(true);
+        m_joinRoomFailedTextMeshProUGUI.text = "Hubo un error al entrar el room: " + m_newInputField.text;
     }
 
     RoomOptions NewRoomInfo()

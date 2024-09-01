@@ -5,11 +5,11 @@ using Photon.Pun;
 
 public class SpawnerManager : MonoBehaviour
 {
-    [SerializeField] Transform m_spawner1;
-    [SerializeField] Transform m_spawner2;
+    [SerializeField] Transform m_spawner;
 
     private void Start()
     {
-        PhotonNetwork.Instantiate("Player", m_spawner1.position, Quaternion.identity);
+        int posNum = Random.Range(0, m_spawner.childCount);
+        PhotonNetwork.Instantiate("Player", m_spawner.GetChild(posNum).position, Quaternion.identity);
     }
 }
