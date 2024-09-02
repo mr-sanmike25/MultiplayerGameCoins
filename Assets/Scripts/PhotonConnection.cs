@@ -51,7 +51,7 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
     {
         print("Hubo un error al entrar el room: " + message);
         m_joinRoomFailedTextMeshProUGUI.gameObject.SetActive(true);
-        m_joinRoomFailedTextMeshProUGUI.text = "Hubo un error al entrar el room: " + m_newInputField.text;
+        m_joinRoomFailedTextMeshProUGUI.text = "Hubo un error al entrar al room: " + m_newInputField.text;
     }
 
     RoomOptions NewRoomInfo()
