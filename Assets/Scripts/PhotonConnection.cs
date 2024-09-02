@@ -66,11 +66,27 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
 
     public void joinRoom()
     {
-        PhotonNetwork.JoinRoom(m_newInputField.text);
+        if (m_newInputField.text == "")
+        {
+            m_joinRoomFailedTextMeshProUGUI.text = "Este espacio no lo puedes dejar en blanco.";
+            m_joinRoomFailedTextMeshProUGUI.gameObject.SetActive(true);
+        }
+        else
+        {
+            PhotonNetwork.JoinRoom(m_newInputField.text);
+        }
     }
 
     public void createRoom()
     {
-        PhotonNetwork.CreateRoom(m_newInputField.text, NewRoomInfo(), null);
+        if(m_newInputField.text == "")
+        {
+            m_createRoomFailedTextMeshProUGUI.text = "Este espacio no lo puedes dejar en blanco.";
+            m_createRoomFailedTextMeshProUGUI.gameObject.SetActive(true);
+        }
+        else
+        {
+            PhotonNetwork.CreateRoom(m_newInputField.text, NewRoomInfo(), null);
+        }
     }
 }
