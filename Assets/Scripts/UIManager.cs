@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
 
     int m_currentScore;
 
-    //PhotonView m_PV;
+    PhotonView m_PV;
 
     private void Awake()
     {
@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        //m_PV = GetComponent<PhotonView>();
+        m_PV = GetComponent<PhotonView>();
         m_TextMeshProUGUI.text = "Score: ";
     }
 
@@ -37,9 +37,14 @@ public class UIManager : MonoBehaviour
         m_TextMeshProUGUI.text = "Score: " + m_currentScore.ToString();
     }
 
-    /*[PunRPC]
+    public void addPoints()
+    {
+        m_PV.RPC("addPointsInUI", RpcTarget.AllBuffered, 5);
+    }
+
+    [PunRPC]
     void addPointsInUI(int p_newScore)
     {
         actualizarText(p_newScore);
-    }*/
+    }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class PlayerController : MonoBehaviour
     /// Author: Miguel Angel Garcia Elizalde y Alan Elias Carpinteyro Gastelum.
     /// Brief: Código del jugador y sus distintos comportamientos, como lo es el movimiento.
 
+    [SerializeField] TextMeshProUGUI m_NicknameUI;
     public GameManager gameManager;
     [SerializeField] int m_speed;
     Rigidbody2D m_rb2D;
@@ -16,15 +18,16 @@ public class PlayerController : MonoBehaviour
     Animator myAnim;
 
     public playerStates playerCurrentState;
-    PhotonView m_pv;
+    PhotonView m_PV;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_pv = GetComponent<PhotonView>();
+        m_PV = GetComponent<PhotonView>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         m_rb2D = GetComponent<Rigidbody2D>();
         myAnim = GetComponent<Animator>();
+        m_NicknameUI.text = m_PV.Owner.NickName;
     }
 
     private void FixedUpdate()
@@ -46,7 +49,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void PlayerMov()
     {
-        if (m_pv.IsMine)
+        if (m_PV.IsMine)
         {
             float m_movementX = Input.GetAxisRaw("Horizontal");
             float m_movementY = Input.GetAxisRaw("Vertical");
@@ -73,11 +76,14 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Coin"))
+        if(m_PV.IsMine)
         {
-            //gameManager.AddCoinsToCount();
-            //m_pv.RPC("addPointsInUI", RpcTarget.AllBuffered, 5);
-            Destroy(collision.gameObject);
+            if (collision.CompareTag("Coin"))
+            {
+                //gameManager.AddCoinsToCount();
+                //m_pv.RPC("addPointsInUI", RpcTarget.AllBuffered, 5);
+                UIManager.Instance.addPoints();
+            }
         }
     }
 }
