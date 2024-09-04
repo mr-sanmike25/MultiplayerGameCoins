@@ -37,6 +37,11 @@ public class UIManager : MonoBehaviour
         m_TextMeshProUGUI.text = "Score: " + m_currentScore.ToString();
     }
 
+    public void leaveCurrentRoomFromEditor()
+    {
+        LevelNetworkManager.instance.disconnectFromCurrentRoom();
+    }
+
     public void addPoints()
     {
         m_PV.RPC("addPointsInUI", RpcTarget.AllBuffered, 5);

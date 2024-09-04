@@ -13,6 +13,7 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
     /// Brief: Código para conectar a cuartos y servidores de Photon.
 
     [SerializeField] TMP_InputField m_newInputField;
+    [SerializeField] TMP_InputField m_newNickname;
     [SerializeField] TextMeshProUGUI m_joinRoomFailedTextMeshProUGUI;
     [SerializeField] TextMeshProUGUI m_createRoomFailedTextMeshProUGUI;
     void Start()
@@ -29,7 +30,8 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         print("Se ha entrado al Lobby Abstracto");
-        
+
+        PhotonNetwork.NickName =m_newNickname.text;
         //PhotonNetwork.JoinOrCreateRoom("TestRoom", NewRoomInfo(), null);
     }
 
@@ -66,6 +68,13 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
 
     public void joinRoom()
     {
+        if (m_newNickname.text == null)
+        {
+            print("Necesita un nombre.");
+            return;
+        }
+        PhotonNetwork.NickName = m_newNickname.text;
+
         if (m_newInputField.text == "")
         {
             m_joinRoomFailedTextMeshProUGUI.text = "Este espacio no lo puedes dejar en blanco.";
@@ -79,7 +88,14 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
 
     public void createRoom()
     {
-        if(m_newInputField.text == "")
+        if (m_newNickname.text == null)
+        {
+            print("Necesita un nombre.");
+            return;
+        }
+        PhotonNetwork.NickName = m_newNickname.text;
+
+        if (m_newInputField.text == "")
         {
             m_createRoomFailedTextMeshProUGUI.text = "Este espacio no lo puedes dejar en blanco.";
             m_createRoomFailedTextMeshProUGUI.gameObject.SetActive(true);
