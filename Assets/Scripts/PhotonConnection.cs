@@ -31,7 +31,7 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
     {
         print("Se ha entrado al Lobby Abstracto");
 
-        PhotonNetwork.NickName =m_newNickname.text;
+        PhotonNetwork.NickName = m_newNickname.text;
         //PhotonNetwork.JoinOrCreateRoom("TestRoom", NewRoomInfo(), null);
     }
 
@@ -59,7 +59,7 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
     RoomOptions NewRoomInfo()
     {
         RoomOptions roomOptions = new RoomOptions();
-        roomOptions.MaxPlayers = 10;
+        roomOptions.MaxPlayers = 6;
         roomOptions.IsOpen = true;
         roomOptions.IsVisible = true;
 

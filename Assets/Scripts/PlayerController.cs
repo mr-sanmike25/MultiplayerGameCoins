@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void PlayerMov()
     {
-        if (m_PV.IsMine)
+        if (m_PV.IsMine && LevelNetworkManager.instance.PlayerCanMove)
         {
             float m_movementX = Input.GetAxisRaw("Horizontal");
             float m_movementY = Input.GetAxisRaw("Vertical");
@@ -72,6 +72,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
     #endregion
 
     private void OnTriggerEnter2D(Collider2D collision)

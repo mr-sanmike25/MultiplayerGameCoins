@@ -8,8 +8,11 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     [SerializeField] TextMeshProUGUI m_TextMeshProUGUI;
+    [SerializeField] TextMeshProUGUI m_TimerText;
 
     int m_currentScore;
+
+    float remainingTime;
 
     PhotonView m_PV;
 
@@ -29,6 +32,14 @@ public class UIManager : MonoBehaviour
     {
         m_PV = GetComponent<PhotonView>();
         m_TextMeshProUGUI.text = "Score: ";
+        remainingTime = LevelNetworkManager.instance.RemainingTime;
+        m_TimerText.text = "Time to start: " + remainingTime.ToString("0");
+    }
+
+    private void Update()
+    {
+        remainingTime = LevelNetworkManager.instance.RemainingTime;
+        m_TimerText.text = "Time to start: " + remainingTime.ToString("0");
     }
 
     public void actualizarText(int p_newScore)

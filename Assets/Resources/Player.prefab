@@ -401,6 +401,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_listGameObj:
   - {fileID: 76400210030953109}
+  - {fileID: 4972161117673843861}
+  - {fileID: 810999527654387412}
   m_listScripts:
   - {fileID: 7776361048108957504}
   - {fileID: -8682684275739151169}
