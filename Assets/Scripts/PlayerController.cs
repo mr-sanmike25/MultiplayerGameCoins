@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(m_PV.IsMine)
+        if (m_PV.IsMine)
         {
             if (collision.CompareTag("Coin"))
             {

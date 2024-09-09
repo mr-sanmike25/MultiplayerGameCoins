@@ -16,6 +16,7 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
     [SerializeField] TMP_InputField m_newNickname;
     [SerializeField] TextMeshProUGUI m_joinRoomFailedTextMeshProUGUI;
     [SerializeField] TextMeshProUGUI m_createRoomFailedTextMeshProUGUI;
+    [SerializeField] TextMeshProUGUI m_nicknameFailedTextMeshProUGUI;
     void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
@@ -68,12 +69,17 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
 
     public void joinRoom()
     {
-        if (m_newNickname.text == null)
+        if (m_newNickname.text == "")
         {
+            m_nicknameFailedTextMeshProUGUI.gameObject.SetActive(true);
+            m_nicknameFailedTextMeshProUGUI.text = "Introduce un nombre, no lo dejes en blanco.";
             print("Necesita un nombre.");
             return;
         }
-        PhotonNetwork.NickName = m_newNickname.text;
+        else
+        {
+            PhotonNetwork.NickName = m_newNickname.text;
+        }
 
         if (m_newInputField.text == "")
         {
@@ -88,12 +94,17 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
 
     public void createRoom()
     {
-        if (m_newNickname.text == null)
+        if (m_newNickname.text == "")
         {
+            m_nicknameFailedTextMeshProUGUI.gameObject.SetActive(true);
+            m_nicknameFailedTextMeshProUGUI.text = "Introduce un nombre, no lo dejes en blanco.";
             print("Necesita un nombre.");
             return;
         }
-        PhotonNetwork.NickName = m_newNickname.text;
+        else
+        {
+            PhotonNetwork.NickName = m_newNickname.text;
+        }
 
         if (m_newInputField.text == "")
         {
