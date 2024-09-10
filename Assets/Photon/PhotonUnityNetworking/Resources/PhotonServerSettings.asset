@@ -44,6 +44,8 @@ MonoBehaviour:
   - ActivateMovements
   - PrintNameWhenCollectingCoins
   - PrintNameWhenCollectingCoinsRPC
+  - showNewGameInfo
+  - LastCoinGottenBy
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

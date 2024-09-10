@@ -10,6 +10,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI m_TextMeshProUGUI;
     [SerializeField] TextMeshProUGUI m_TimerText;
 
+    [SerializeField] TextMeshProUGUI m_gameInfo;
+    [SerializeField] TextMeshProUGUI m_lastCoinGottenBy;
+
     int m_currentScore;
 
     float remainingTime;
@@ -56,6 +59,28 @@ public class UIManager : MonoBehaviour
     public void addPoints()
     {
         m_PV.RPC("addPointsInUI", RpcTarget.AllBuffered, 5);
+    }
+
+    public void getNewInfoGame(string p_playerInfo)
+    {
+        m_PV.RPC("showNewGameInfo", RpcTarget.All, p_playerInfo);
+    }
+
+    public void getLastCoinFunction(string p_playerInfo)
+    {
+        m_PV.RPC("LastCoinGottenBy", RpcTarget.AllBuffered, p_playerInfo);
+    }
+
+    [PunRPC]
+    void showNewGameInfo(string p_name)
+    {
+        m_gameInfo.text = "El jugador: " + p_name + " Ganó una moneda";
+    }
+
+    [PunRPC]
+    void LastCoinGottenBy(string p_name)
+    {
+        m_lastCoinGottenBy.text = "El jugador: " + p_name + " obtuvo la última moneda";
     }
 
     [PunRPC]

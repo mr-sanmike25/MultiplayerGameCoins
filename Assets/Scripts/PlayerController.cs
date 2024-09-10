@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     /// Brief: Código del jugador y sus distintos comportamientos, como lo es el movimiento.
 
     [SerializeField] TextMeshProUGUI m_NicknameUI;
-    public GameManager gameManager;
+
     [SerializeField] int m_speed;
     Rigidbody2D m_rb2D;
     Vector2 m_movement;
@@ -24,7 +24,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         m_PV = GetComponent<PhotonView>();
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         m_rb2D = GetComponent<Rigidbody2D>();
         myAnim = GetComponent<Animator>();
         m_NicknameUI.text = m_PV.Owner.NickName;
@@ -84,6 +83,8 @@ public class PlayerController : MonoBehaviour
                 //gameManager.AddCoinsToCount();
                 //m_pv.RPC("addPointsInUI", RpcTarget.AllBuffered, 5);
                 UIManager.Instance.addPoints();
+                UIManager.Instance.getNewInfoGame(m_PV.Owner.NickName);
+                GameManager.instance.PlayerWhoGotLastCoin = m_PV.Owner.NickName;
             }
         }
     }

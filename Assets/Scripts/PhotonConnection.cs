@@ -17,6 +17,8 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
     [SerializeField] TextMeshProUGUI m_joinRoomFailedTextMeshProUGUI;
     [SerializeField] TextMeshProUGUI m_createRoomFailedTextMeshProUGUI;
     [SerializeField] TextMeshProUGUI m_nicknameFailedTextMeshProUGUI;
+
+    [SerializeField] string nickname;
     void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
@@ -32,7 +34,7 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
     {
         print("Se ha entrado al Lobby Abstracto");
 
-        PhotonNetwork.NickName = m_newNickname.text;
+        PhotonNetwork.NickName = nickname;
         //PhotonNetwork.JoinOrCreateRoom("TestRoom", NewRoomInfo(), null);
     }
 
@@ -69,7 +71,7 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
 
     public void joinRoom()
     {
-        if (m_newNickname.text == "")
+        if (nickname == "")
         {
             m_nicknameFailedTextMeshProUGUI.gameObject.SetActive(true);
             m_nicknameFailedTextMeshProUGUI.text = "Introduce un nombre, no lo dejes en blanco.";
@@ -78,7 +80,7 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
         }
         else
         {
-            PhotonNetwork.NickName = m_newNickname.text;
+            nickname = m_newNickname.text;
         }
 
         if (m_newInputField.text == "")
@@ -94,7 +96,7 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
 
     public void createRoom()
     {
-        if (m_newNickname.text == "")
+        if (nickname == "")
         {
             m_nicknameFailedTextMeshProUGUI.gameObject.SetActive(true);
             m_nicknameFailedTextMeshProUGUI.text = "Introduce un nombre, no lo dejes en blanco.";
@@ -103,7 +105,7 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
         }
         else
         {
-            PhotonNetwork.NickName = m_newNickname.text;
+            nickname = m_newNickname.text;
         }
 
         if (m_newInputField.text == "")
@@ -114,6 +116,15 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
         else
         {
             PhotonNetwork.CreateRoom(m_newInputField.text, NewRoomInfo(), null);
+        }
+    }
+
+    public void SaveNickname()
+    {
+        if (m_newNickname.text != "")
+        {
+            nickname = m_newNickname.text;
+            PhotonNetwork.NickName = nickname;
         }
     }
 }

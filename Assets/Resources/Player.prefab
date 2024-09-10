@@ -397,7 +397,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_NicknameUI: {fileID: 7821133849485237188}
-  gameManager: {fileID: 0}
   m_speed: 5
   playerCurrentState: 0
 --- !u!114 &-8682684275739151169
