@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
                 //m_pv.RPC("addPointsInUI", RpcTarget.AllBuffered, 5);
                 UIManager.Instance.addPoints();
                 UIManager.Instance.getNewInfoGame(m_PV.Owner.NickName);
-                GameManager.instance.PlayerWhoGotLastCoin = m_PV.Owner.NickName;
+                //GameManager.instance.PlayerWhoGotLastCoin = m_PV.Owner.NickName;
             }
         }
     }

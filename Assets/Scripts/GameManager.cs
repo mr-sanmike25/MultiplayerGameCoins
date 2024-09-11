@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        playerNameLastCoin(PlayerWhoGotLastCoin);
+        //playerNameLastCoin(PlayerWhoGotLastCoin);
         CoinManager();
 
         if(coinsParent.childCount == 0)

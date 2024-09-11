@@ -16,6 +16,7 @@ public class PrintCoinsCollected : MonoBehaviour
         if (collision.CompareTag("Coin"))
         {
             m_PV.RPC("PrintNameWhenCollectingCoinsRPC", RpcTarget.AllBuffered);
+            GameManager.instance.PlayerWhoGotLastCoin = m_PV.Owner.NickName;
         }
     }
 
