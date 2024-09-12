@@ -11,6 +11,9 @@ public class LevelNetworkManager : MonoBehaviourPunCallbacks
     [SerializeField] private bool playerCanMove;
     [SerializeField] float remainingTime = 3.0f;
 
+    [SerializeField] GameObject m_enemy;
+    [SerializeField] Transform m_enemySpawn;
+
     public bool PlayerCanMove { get => playerCanMove; set => playerCanMove = value; }
     public float RemainingTime { get => remainingTime; set => remainingTime = value; }
 
@@ -35,7 +38,7 @@ public class LevelNetworkManager : MonoBehaviourPunCallbacks
 
             if ((RemainingTime <= 0.0f) && (!PlayerCanMove))
             {
-                m_PV.RPC("ActivateMovements", RpcTarget.AllBuffered);
+                m_PV.RPC("spawnNewEnemy", RpcTarget.AllBuffered);
             }
         }
     }
@@ -57,6 +60,11 @@ public class LevelNetworkManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         print("Entró nuevo player: " + newPlayer.NickName);
+
+        if (PhotonNetwork.CurrentRoom.PlayerCount >= 2)
+        {
+            m_PV.RPC("ActivateMovements", RpcTarget.AllBuffered);
+        }
     }
 
     [PunRPC]
@@ -77,5 +85,17 @@ public class LevelNetworkManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         print("Salió el player: " + otherPlayer.NickName);
+    }
+
+    IEnumerator timeToSpawn(int p_timeToSpawn)
+    {
+        yield return new WaitForSeconds(p_timeToSpawn);
+        Instantiate(m_enemy, m_enemySpawn.transform.position, Quaternion.identity);
+    }
+
+    [PunRPC]
+    void spawnNewEnemy()
+    {
+        StartCoroutine(timeToSpawn(3));
     }
 }

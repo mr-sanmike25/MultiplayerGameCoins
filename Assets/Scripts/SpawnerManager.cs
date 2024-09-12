@@ -11,5 +11,6 @@ public class SpawnerManager : MonoBehaviour
     {
         int posNum = Random.Range(0, m_spawner.childCount);
         PhotonNetwork.Instantiate("Player", m_spawner.GetChild(posNum).position, Quaternion.identity);
+        PhotonNetwork.Instantiate("Enemy", m_spawner.GetChild(posNum).position, Quaternion.identity);
     }
 }
